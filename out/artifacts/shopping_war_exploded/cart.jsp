@@ -39,11 +39,13 @@
         %>
         </tbody>
     </table>
-        <form method="post" name="button_form" action="${pageContext.request.contextPath }/DelCartServlet" >
-            <input type="submit" value="清空"/>
-        </form>
+
     <form method="post" name="button_form" action="${pageContext.request.contextPath }/MakeOrderServlet" >
+        邮箱：<input type="text" value="" name="email_address"/>
         <input type="submit"  value="下单"/>
+    </form>
+    <form method="post" name="button_form" action="${pageContext.request.contextPath }/DelCartServlet" >
+        <input type="submit" value="清空"/>
     </form>
     <%
         String msg=(String)request.getAttribute("msg");

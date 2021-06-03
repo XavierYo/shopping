@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>注册</title>
@@ -9,22 +9,22 @@
 
     function checkForm(){
         const username = document.getElementById("username").value;
-        if(username==null||username==""){
+        if(username==null||username===""){
             alert("用户名不能为空");
             return false;
         }
         const password = document.getElementById("password").value;
-        if(password==null||password==""){
+        if(password==null||password===""){
             alert("密码不能为空");
             return false;
         }
-        var repassword = document.getElementById("repassword").value;
-        if(repassword!=password){
+        const repassword = document.getElementById("repassword").value;
+        if(repassword!==password){
             alert("两次密码输入不一致");
             return false;
         }
         const email = document.getElementById("email").value;
-        if(email==null||email==""){
+        if(email==null||email===""){
             alert("邮箱不能为空");
             return false;
         }
@@ -38,7 +38,7 @@
     <input type="text"  name="username" id="username" value="" /><br>
     <label for="password">密码:</label>
     <input type="password"  name="password" id="password" value="" /><br>
-    <label for="password">重复密码:</label>
+    <label for="repassword">重复密码:</label>
     <input type="password"  name="repassword" id="repassword" value="" /><br>
     <label for="email">邮箱:</label>
     <input type="text"  name="email" id="email" value="" /><br>

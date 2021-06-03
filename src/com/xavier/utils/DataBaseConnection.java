@@ -12,7 +12,7 @@ public class DataBaseConnection {
     //驱动名称
     private static final String driverName="com.mysql.cj.jdbc.Driver";
     //数据库的地址(通过端口和SID找到对应的数据库)
-    private static final String url="jdbc:mysql://localhost:3306/shopdb?&useSSL=false&serverTimezone=UTC&characterEncoding=utf-8";
+    private static final String url="jdbc:mysql://47.115.63.32:3306/shopdb?&useSSL=false&serverTimezone=UTC&characterEncoding=utf-8";
     //数据库登录用户名
     private static final String userDB="manager";
     //数据库登录密码

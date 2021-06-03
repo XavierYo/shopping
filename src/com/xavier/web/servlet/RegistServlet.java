@@ -22,7 +22,6 @@ public class RegistServlet extends HttpServlet {
         String username =request.getParameter("username");
         String password =request.getParameter("password");
         String email =request.getParameter("email");
-
         //封装数据
         User user =new User();
         user.setUsername(username);
