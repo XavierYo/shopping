@@ -3,21 +3,19 @@ package com.xavier.service;
 import com.xavier.domain.Item;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ItemService {
-    int getItemIDByName(String name);
-    boolean delByID(int ID);
-    boolean delByName(String name);
-    void setNumberByID(int ID,int number);
-    void setNumberByName(String name,int number);
-    boolean ins(Item item);
-    boolean modItem(int item_id,Item newItem);
-    Item getItemByID(int ID);
-    Item getItemByName(String name);
-    List<Item> getItemsByCatID(int ID);
-    List<Item> getItemsByKeyword(String keyword);
-    List<Item> getAllItems();
-    Item readAItem(ResultSet rs);
+    boolean delByID(int ID) throws SQLException;
+    boolean delByName(String name) throws SQLException;
+    boolean ins(Item item) throws SQLException;
+    boolean modItem(Item newItem) throws SQLException;
+    Item getItemByID(int ID) throws SQLException;
+    Item getItemByName(String name) throws SQLException;
+    List<Item> getItemsByCatID(int ID) throws SQLException;
+    List<Item> getItemsByKeyword(String keyword) throws SQLException;
+    List<Item> getAllItems() throws SQLException;
+
 }
 
