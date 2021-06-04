@@ -1,6 +1,13 @@
-<%@ page import="com.xavier.domain.Item" %>
-<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<script type="text/javascript">
+    function checkItemDetail(item_id){
+        location.href = "${pageContext.request.contextPath}/ItemDetailServlet?item_id="+item_id;
+    }
+    function addToCart(item_id){
+        location.href = "${pageContext.request.contextPath}/AddToCartServlet?item_id="+item_id;
+    }
+</script>
 <div>
     <table border="1" class="table table-hover table-striped">
         <thead>
@@ -15,27 +22,20 @@
         </tr>
         </thead>
         <tbody>
-        <%
-            List<Item> items;
-            items=(List<Item>)request.getSession().getAttribute("items_searchRes");
-            if(items!=null)
-            for (Item item:items) {
-                out.println("<tr>");
-                out.println("<td>"+item.getItemID()+"</td>");
-                out.println("<td>"+item.getCategoryID()+"</td>");
-                out.println("<td>"+item.getItemName()+"</td>");
-                out.println("<td>"+item.getPrice()+"</td>");
-                out.println("<td>"+item.getItemNumber()+"</td>");
-                out.println("<td>"+item.getItemDesc()+"</td>");
-                out.println("<td>"+"<form  action='ItemDetailServlet' method = 'post'>"+
-                        "<input type ='hidden' name='item_id' value= "+item.getItemID()+">"+
-                        "<input type ='submit'  value='查看详情' ></form>"+
-                        "<form  action='AddToCartServlet' method = 'post'>"+
-                        "<input type ='hidden' name='item_id' value= "+item.getItemID()+">"+
-                        "<input type ='submit'  value='加入购物车' ></form>"+"</td>");
-                out.println("</tr>");
-            }
-        %>
+        <c:forEach items="${items_searchRes}" var="c">
+            <tr>
+                <td>${c.item_id}</td>
+                <td>${c.category_id}</td>
+                <td>${c.item_name}</td>
+                <td>${c.price}</td>
+                <td>${c.num}</td>
+                <td>${c.description}</td>
+                <td>
+                    <a href="javascript:void(0)" onclick="checkItemDetail('${c.item_id}')">查看详情</a>
+                    <a href="javascript:void(0)" onclick="addToCart('${c.item_id}')">加入购物车</a>
+                </td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 </div>

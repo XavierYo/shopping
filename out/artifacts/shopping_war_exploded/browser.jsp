@@ -1,5 +1,6 @@
-<%@ page import="java.sql.*" %>
-<%@ page import="com.xavier.utils.DataBaseConnection" %>
+<%@ page import="com.xavier.domain.Category" %>
+<%@ page import="com.xavier.dao.CategoryDao" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -8,21 +9,14 @@
 <body>
 <%@ include file ="header.jsp"%>
 <%
-    DataBaseConnection dbc=new DataBaseConnection();
-    String sql="SELECT * FROM category";
-    ResultSet rs=dbc.query(sql);
+    CategoryDao categoryDao = new CategoryDao();
+    List<Category> categories = categoryDao.getAllCategory();
     out.print("<form action='BrowserServlet' method ='post'>");
     out.print("<select name='selected_id'>");
-    try{
-        while (rs.next()) {
-        int category_id = rs.getInt("category_id");
-        String category_name = rs.getString("category_name");
-        out.print("<option value =" + category_id + ">" + category_name + "</option>");
-        }
-    }catch (SQLException e){
-        e.printStackTrace();
+    for(int i=0;i<categories.size();i++){
+        out.print("<option value ="+ categories.get(i).getCategory_id()+">"
+                +categories.get(i).getCategory_name()+"</option>");
     }
-
     out.print("</select>");
     out.print("<input type ='submit' value ='提交'>");
     out.print("</form>");
