@@ -14,7 +14,7 @@
         return;
     }
     OrderServiceImpl os=new OrderServiceImpl();
-    List<Order> orders =os.getOrders(existUser.getUserID());
+    List<Order> orders =os.getOrders(existUser.getUser_id());
     request.setAttribute("show_orders",orders);
     String temp_msg=(String)request.getAttribute("msg");
     if(temp_msg!=null){

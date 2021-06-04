@@ -29,7 +29,7 @@
                 <td>${c.item_name}</td>
                 <td>${c.price}</td>
                 <td>${c.num}</td>
-                <td>${c.descption}</td>
+                <td>${c.description}</td>
                 <td>
                     <a href="javascript:void(0)" onclick="checkItemDetail('${c.item_id}')">查看详情</a>
                     <a href="javascript:void(0)" onclick="addToCart('${c.item_id}')">加入购物车</a>
