@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 @WebServlet("/RegistServlet")
 public class RegistServlet extends HttpServlet {
@@ -29,7 +30,12 @@ public class RegistServlet extends HttpServlet {
         user.setEmail(email);
         //处理数据
         UserService userService = new UserServiceImpl();
-        boolean flag = userService.regist(user);
+        boolean flag = false;
+        try {
+            flag = userService.regist(user);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
         // 显示结果:
         if(!flag){
             // 注册失败

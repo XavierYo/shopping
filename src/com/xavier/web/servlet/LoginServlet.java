@@ -1,6 +1,7 @@
 package com.xavier.web.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -22,24 +23,26 @@ public class LoginServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        // 封装数据:
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
+
         // 处理数据:完成登陆.
         UserService userService = new UserServiceImpl();
-        User existUser = userService.login(user);
-        // 显示结果:
-        if(existUser == null){
-            // 登录失败
-            request.setAttribute("msg", "用户名或密码错误!");
-            request.getRequestDispatcher("/login.jsp").forward(request, response);
-        }else{
-            // 登录成功
-            // 将用户信息保存:
-            request.getSession().setAttribute("existUser", existUser);
-            response.sendRedirect(request.getContextPath()+"/index.jsp");
+        try {
+            User existUser = userService.login(username, password);
+            // 显示结果:
+            if(existUser == null){
+                // 登录失败
+                request.setAttribute("msg", "用户名或密码错误!");
+                request.getRequestDispatcher("/login.jsp").forward(request, response);
+            }else{
+                // 登录成功
+                // 将用户信息保存:
+                request.getSession().setAttribute("existUser", existUser);
+                response.sendRedirect(request.getContextPath()+"/index.jsp");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
         }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

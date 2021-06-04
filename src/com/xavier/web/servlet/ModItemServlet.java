@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet("/ModItemServlet")
 public class ModItemServlet extends HttpServlet {
@@ -38,25 +39,43 @@ public class ModItemServlet extends HttpServlet {
         //商品类别id
         String temp_CatName = request.getParameter("category_name");
         CategoryServiceImpl categoryService=new CategoryServiceImpl();
-        int category_id=categoryService.getCatID(temp_CatName);
-        //-1即表示类别不存在，需创建
-        if(category_id==-1){
-            categoryService.insCategory(temp_CatName);
+        int category_id=-1;
+
+        try{
             category_id=categoryService.getCatID(temp_CatName);
+            //-1即表示类别不存在，需创建
+            if(category_id==-1){
+                categoryService.insCategory(temp_CatName);
+                category_id=categoryService.getCatID(temp_CatName);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
+
         String desc = request.getParameter("description");//商品描述
         // 封装数据:
         Item new_item = new Item();
-        new_item.setItemName(item_name);
+        new_item.setItem_name(item_name);
         new_item.setPrice(price);
-        new_item.setCategoryID(category_id);
-        new_item.setItemDesc(desc);
-        new_item.setItemNumber(number);
+        new_item.setCategory_id(category_id);
+        new_item.setDescription(desc);
+        new_item.setNum(number);
 
         // 处理数据:完成插入
         ItemService itemService = new ItemServiceImpl();
-        int item_id=itemService.getItemIDByName(item_name);
-        boolean flag=itemService.modItem(item_id,new_item);
+        int item_id= 0;
+        try {
+            item_id = itemService.getItemByName(item_name).getItem_id();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        new_item.setItem_id(item_id);
+        boolean flag= false;
+        try {
+            flag = itemService.modItem(new_item);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         // 显示结果:
         if(flag)
             request.setAttribute("msg", "修改成功！");

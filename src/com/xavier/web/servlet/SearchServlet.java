@@ -1,10 +1,7 @@
 package com.xavier.web.servlet;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.xavier.domain.Item;
-import com.xavier.domain.User;
-import com.xavier.service.UserService;
 import com.xavier.service.impl.ItemServiceImpl;
-import com.xavier.service.impl.UserServiceImpl;
-import com.xavier.utils.DataBaseConnection;
 
 @WebServlet("/SearchServlet")
 public class SearchServlet extends HttpServlet {
@@ -30,7 +23,12 @@ public class SearchServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         String keyword = request.getParameter("keyWord");
         ItemServiceImpl itemService=new ItemServiceImpl();
-        List<Item> searchRes=itemService.getItemsByKeyword(keyword);
+        List<Item> searchRes= null;
+        try {
+            searchRes = itemService.getItemsByKeyword(keyword);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
 
         // 显示结果:
         if(searchRes == null){

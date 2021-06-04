@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet("/ItemDetailServlet")
 public class ItemDetailServlet extends HttpServlet {
@@ -23,8 +24,13 @@ public class ItemDetailServlet extends HttpServlet {
             item_id = Integer.parseInt(temp_id);
         }
         ItemServiceImpl itemService=new ItemServiceImpl();
-        Item item=itemService.getItemByID(item_id);
-        req.setAttribute("item_detail",item);
+        Item item= null;
+        try {
+            item = itemService.getItemByID(item_id);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        req.getSession().setAttribute("item_detail",item);
         req.getRequestDispatcher("/item_detail.jsp").forward(req, resp);
     }
 

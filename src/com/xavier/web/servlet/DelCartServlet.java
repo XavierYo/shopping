@@ -1,7 +1,5 @@
 package com.xavier.web.servlet;
-import com.xavier.domain.User;
-import com.xavier.service.CartService;
-import com.xavier.service.impl.CartServiceImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,9 +9,11 @@ import java.io.IOException;
 @WebServlet("/DelCartServlet")
 public class DelCartServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User existUser=(User)request.getSession().getAttribute("existUser");
-        CartService cs=new CartServiceImpl();
-        cs.delCart(existUser.getUserID());
+        // 清空购物车
+        request.getSession().removeAttribute("cart");
         response.sendRedirect("cart.jsp"); //重定向至主页
+    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request,response);
     }
 }

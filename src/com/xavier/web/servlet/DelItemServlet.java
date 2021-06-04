@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet("/DelItemServlet")
 public class DelItemServlet extends HttpServlet {
@@ -17,7 +18,12 @@ public class DelItemServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         String item_name = request.getParameter("item_name");//商品名字
         ItemService itemService=new ItemServiceImpl();
-        boolean flag = itemService.delByName(item_name);
+        boolean flag = false;
+        try {
+            flag = itemService.delByName(item_name);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
         // 显示结果:
         if(flag)
             request.setAttribute("msg", "删除成功！");
