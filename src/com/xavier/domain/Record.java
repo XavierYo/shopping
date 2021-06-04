@@ -6,7 +6,7 @@ public class Record {
     private int record_id;
     private int user_id;
     private int item_id;
-
+    private Timestamp browser_time;
     public Timestamp getBrowser_time() {
         return browser_time;
     }
@@ -14,8 +14,6 @@ public class Record {
     public void setBrowser_time(Timestamp browser_time) {
         this.browser_time = browser_time;
     }
-
-    private Timestamp browser_time;
 
 
     public int getRecord_id() {
