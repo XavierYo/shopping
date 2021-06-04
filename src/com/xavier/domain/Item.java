@@ -1,27 +1,27 @@
 package com.xavier.domain;
 
 public class Item {
-    private int itemID;
-    private String itemName;
+    private int item_id;
+    private String item_name;
     private double price;
-    private int categoryID;
-    private String itemDesc;
-    private int number;
+    private int category_id;
+    private String description;
+    private int num;
 
-    public int getItemID() {
-        return itemID;
+    public int getItem_id() {
+        return item_id;
     }
 
-    public void setItemID(int itemID) {
-        this.itemID = itemID;
+    public void setItem_id(int item_id) {
+        this.item_id = item_id;
     }
 
-    public String getItemName() {
-        return itemName;
+    public String getItem_name() {
+        return item_name;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public void setItem_name(String item_name) {
+        this.item_name = item_name;
     }
 
     public double getPrice() {
@@ -32,29 +32,53 @@ public class Item {
         this.price = price;
     }
 
-    public int getCategoryID() { return categoryID;  }
+    public int getCategory_id() { return category_id;  }
 
-    public void setCategoryID(int categoryID) {
-        this.categoryID = categoryID;
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
     }
 
-    public String getItemDesc() {
-        return itemDesc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setItemDesc(String itemDesc) {
-        this.itemDesc = itemDesc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public String toString() {
-        return "Item [ID=" + itemID + ", name=" + itemName + "]";
+        return "Item [ID=" + item_id + ", name=" + item_name + "]";
     }
 
-    public int getItemNumber() {
-        return number;
+    public int getNum() {
+        return num;
     }
-    public void setItemNumber(int number){
-        this.number=number;
+    public void setNum(int number){
+        this.num =number;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Item other = (Item) obj;
+        if (item_id != other.item_id)
+            return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        final int prime = 37;
+        int result = 1;
+        result = prime * result + item_id;
+        return result;
     }
 }
