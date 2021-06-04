@@ -7,18 +7,8 @@ import java.util.List;
 public class Order {
     private int order_id;
     private double total_amount;
-    private int user_id;
     private Timestamp create_time;
-    private List<Item> items;
-    public List<Item> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
-
+    private int user_id;
 
     public int getOrder_id(){return order_id;}
     public void setOrder_id(int order_id){this.order_id=order_id;}
