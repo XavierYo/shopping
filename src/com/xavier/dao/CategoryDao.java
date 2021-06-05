@@ -23,15 +23,33 @@ public class CategoryDao {
             return category.getCategory_id();
         else return -1;
     }
-    public boolean insCategory(String name) throws SQLException{
-        String sql = "insert into category (category_name) values(?)";
+    public boolean insCategory(String name,int seller) throws SQLException{
+        String sql = "insert into category (category_name,seller) values(?,?)";
         QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
-        return 0!=qr.update(sql,name);
+        return 0!=qr.update(sql,name,seller);
     }
 
     public List<Category> getAllCategory() throws SQLException{
         String sql = "select * from category";
         QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
         return qr.query(sql, new BeanListHandler<Category>(Category.class));
+    }
+
+    public Category getCategory(String name) throws SQLException{
+        String sql = "select * from category where category_name=?";
+        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+        return qr.query(sql, new BeanHandler<>(Category.class), name);
+    }
+
+    public Category getCategory(int id) throws SQLException{
+        String sql = "select * from category where category_id=?";
+        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+        return qr.query(sql, new BeanHandler<>(Category.class), id);
+    }
+
+    public List<Category> getCategoriesBySeller(int seller_id) throws SQLException{
+        String sql = "select * from category where seller=?";
+        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+        return qr.query(sql, new BeanListHandler<Category>(Category.class),seller_id);
     }
 }
