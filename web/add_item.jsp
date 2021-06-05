@@ -22,12 +22,12 @@
             alert("价格不能为空");
             return false;
         }
-        const number = document.getElementById("number").value;
+        const number = document.getElementById("num").value;
         if(number==null||number==""){
             alert("库存不能为空");
             return false;
         }
-        const category_name = document.getElementById("category_name").value;
+        const category_name = document.getElementById("category_id").value;
         if(category_name==null||category_name==""){
             alert("类别不能为空");
             return false;
@@ -47,11 +47,11 @@
 <form  onsubmit="return checkForm()" method="post" action="${pageContext.request.contextPath }/InsertItemServlet">
     <fieldset style="display:inline-block;*display:inline;*zoom:1;">
         <legend>添加商品</legend>
-    商品名称: <input type="text" name="item_name" value=""><br>
-    商品价格: <input type="number" name="price" value="Mouse"><br>
-    商品数目: <input type="number" name="number" value=""><br>
-    商品类别: <input type="text" name="category_name" value=""><br>
-    商品描述: <input type="text" name="description" value=""><br>
+        商品名称: <input type="text" name="item_name" value=""><br>
+        商品价格: <input type="number" name="price" value=""><br>
+        类别ID: <input type="number" name="category_id" value=""><br>
+        商品描述: <input type="text" name="description" value=""><br>
+        商品数目: <input type="number" name="num" value=""><br>
     <input type="submit" value="提交">
     </fieldset>
 </form>
