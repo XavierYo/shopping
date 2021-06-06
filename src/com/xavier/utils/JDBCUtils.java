@@ -1,11 +1,9 @@
 package com.xavier.utils;
-
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
-
 /**
  * 创建数据库连接池
  */
@@ -14,12 +12,10 @@ public class JDBCUtils {
     private static ThreadLocal<Connection> tc = new ThreadLocal<Connection>();
     // 读取的是C3P0-config默认配置创建数据库连接池对象
     private static DataSource ds = new ComboPooledDataSource();
-
     // 获取数据库连接池对象
     public static DataSource getDataSource() {
         return ds;
     }
-
     // 从连接池中获取连接
     public static Connection getConnection() throws SQLException {
         Connection conn = tc.get();
@@ -35,14 +31,7 @@ public class JDBCUtils {
     // 开启事务
     public static void startTransaction() {
         try {
-            // 获取连接
             Connection conn = getConnection();
-            // 开启事务
-            /*
-             * setAutoCommit总的来说就是保持数据的完整性，一个系统的更新操作可能要涉及多张表，需多个SQL语句进行操作
-             * 循环里连续的进行插入操作，如果你在开始时设置了：conn.setAutoCommit(false);
-             * 最后才进行conn.commit(),这样你即使插入的时候报错，修改的内容也不会提交到数据库，
-             */
             conn.setAutoCommit(false);
         } catch (Exception e) {
             e.printStackTrace();

@@ -4,6 +4,7 @@ import com.xavier.dao.ItemDao;
 import com.xavier.domain.Item;
 import com.xavier.service.ItemService;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemServiceImpl implements ItemService {
@@ -64,6 +65,13 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> getAllItems() throws SQLException{
         ItemDao itemDao = new ItemDao();
         return itemDao.getAllItems();
+    }
+
+    @Override
+    public List<Item> getRecommend() throws SQLException {
+        ItemDao itemDao = new ItemDao();
+        List<Item> items = itemDao.getRecommend();
+        return items;
     }
 
 

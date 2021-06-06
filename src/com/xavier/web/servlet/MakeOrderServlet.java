@@ -1,9 +1,12 @@
 package com.xavier.web.servlet;
 
 import com.xavier.domain.Item;
+import com.xavier.domain.Log;
 import com.xavier.domain.Order;
 import com.xavier.domain.User;
+import com.xavier.service.LogService;
 import com.xavier.service.OrderService;
+import com.xavier.service.impl.LogServiceImpl;
 import com.xavier.service.impl.OrderServiceImpl;
 import com.xavier.utils.SendMail;
 
@@ -68,5 +71,22 @@ public class MakeOrderServlet extends HttpServlet {
             request.setAttribute("msg","库存不足！");
             request.getRequestDispatcher("cart.jsp").forward(request,response);
         }
+        Log log = new Log();
+        log.setOperate("下订单");
+        if(request.getRemoteAddr()!=null){
+            log.setIp(request.getRemoteAddr());
+        }
+        if(existUser!=null){
+            log.setUser(existUser.getUser_id());
+        }
+        LogService logService = new LogServiceImpl();
+        try {
+            logService.writeLog(log);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+    }
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doPost(request,response);
     }
 }

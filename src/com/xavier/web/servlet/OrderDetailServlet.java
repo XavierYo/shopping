@@ -1,8 +1,12 @@
 package com.xavier.web.servlet;
 
 import com.xavier.domain.Item;
+import com.xavier.domain.Log;
 import com.xavier.domain.Order;
+import com.xavier.domain.User;
+import com.xavier.service.LogService;
 import com.xavier.service.OrderService;
+import com.xavier.service.impl.LogServiceImpl;
 import com.xavier.service.impl.OrderServiceImpl;
 
 import javax.servlet.ServletException;
@@ -37,5 +41,20 @@ public class OrderDetailServlet extends HttpServlet {
         request.getSession().setAttribute("order",order);
         request.getSession().setAttribute("order_detail",order_detail);
         request.getRequestDispatcher("order_detail.jsp").forward(request,response);
+        Log log = new Log();
+        log.setOperate("查看订单详情："+order_id);
+        if(request.getRemoteAddr()!=null){
+            log.setIp(request.getRemoteAddr());
+        }
+        User existUser = (User)request.getSession().getAttribute("existUser");
+        if(existUser!=null){
+            log.setUser(existUser.getUser_id());
+        }
+        LogService logService = new LogServiceImpl();
+        try {
+            logService.writeLog(log);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
     }
 }

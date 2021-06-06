@@ -5,8 +5,10 @@
     String username;
     if(existUser==null){
         username="未登录";
-    }else if(existUser.getUsername().equals("admin")){
-        username="<A href=\"admin.jsp\">管理商品</A>";
+    }else if(existUser.getRole()==1){
+        username="<A href=\"manage.jsp\">销售人员界面</A>";
+    }else if(existUser.getRole()==2){
+        username="<A href=\"admin.jsp\">管理员界面</A>";
     }else {
         username=existUser.getUsername();
     }

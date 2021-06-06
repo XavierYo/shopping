@@ -1,10 +1,13 @@
 package com.xavier.web.servlet;
 
 import com.xavier.domain.Item;
+import com.xavier.domain.Log;
 import com.xavier.domain.User;
 import com.xavier.service.ItemService;
+import com.xavier.service.LogService;
 import com.xavier.service.impl.CategoryServiceImpl;
 import com.xavier.service.impl.ItemServiceImpl;
+import com.xavier.service.impl.LogServiceImpl;
 import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.ServletException;
@@ -59,6 +62,21 @@ public class ModItemServlet extends HttpServlet {
         else
             request.setAttribute("msg","修改失败！");
         request.getRequestDispatcher("/add_item.jsp").forward(request, response);
+        Log log = new Log();
+        log.setOperate("修改商品："+item.getItem_name());
+        if(request.getRemoteAddr()!=null){
+            log.setIp(request.getRemoteAddr());
+        }
+        User existUser = (User)request.getSession().getAttribute("existUser");
+        if(existUser!=null){
+            log.setUser(existUser.getUser_id());
+        }
+        LogService logService = new LogServiceImpl();
+        try {
+            logService.writeLog(log);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doPost(request, response);

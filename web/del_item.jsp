@@ -8,7 +8,7 @@
 <body>
 <%@include file="header.jsp"%>
 <form method="post" action="${pageContext.request.contextPath }/DelItemServlet">
-    输入待删除的商品名称: <input type="text" name="item_name" value=""><br>
+    输入待删除的商品id: <input type="number" name="item_id" value=""><br>
     <input type="submit" value="提交">
     <%
         ItemServiceImpl itemService=new ItemServiceImpl();

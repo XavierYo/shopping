@@ -1,7 +1,11 @@
 package com.xavier.web.servlet;
 
 import com.xavier.domain.Item;
+import com.xavier.domain.Log;
+import com.xavier.domain.User;
+import com.xavier.service.LogService;
 import com.xavier.service.impl.ItemServiceImpl;
+import com.xavier.service.impl.LogServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,6 +36,22 @@ public class BrowserServlet extends HttpServlet {
         }
 
         request.getSession().setAttribute("items_searchRes", items);
+
+        Log log = new Log();
+        log.setOperate("浏览分类："+category_id);
+        if(request.getRemoteAddr()!=null){
+            log.setIp(request.getRemoteAddr());
+        }
+        User existUser = (User)request.getSession().getAttribute("existUser");
+        if(existUser!=null){
+            log.setUser(existUser.getUser_id());
+        }
+        LogService logService = new LogServiceImpl();
+        try {
+            logService.writeLog(log);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
 
             //跳转到查找结果的页面
         request.getRequestDispatcher("browser.jsp").forward(request,response);

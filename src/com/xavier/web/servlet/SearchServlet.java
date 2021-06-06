@@ -12,7 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.xavier.domain.Item;
+import com.xavier.domain.Log;
+import com.xavier.domain.User;
+import com.xavier.service.LogService;
 import com.xavier.service.impl.ItemServiceImpl;
+import com.xavier.service.impl.LogServiceImpl;
 
 @WebServlet("/SearchServlet")
 public class SearchServlet extends HttpServlet {
@@ -39,6 +43,21 @@ public class SearchServlet extends HttpServlet {
             request.getSession().setAttribute("items_searchRes", searchRes);
             //跳转到查找结果的页面
             request.getRequestDispatcher("search.jsp").forward(request,response);
+        }
+        Log log = new Log();
+        log.setOperate("搜索商品,关键词："+keyword);
+        if(request.getRemoteAddr()!=null){
+            log.setIp(request.getRemoteAddr());
+        }
+        User existUser = (User)request.getSession().getAttribute("existUser");
+        if(existUser!=null){
+            log.setUser(existUser.getUser_id());
+        }
+        LogService logService = new LogServiceImpl();
+        try {
+            logService.writeLog(log);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
     }
 

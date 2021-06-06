@@ -1,7 +1,11 @@
 package com.xavier.web.servlet;
 
 import com.xavier.domain.Item;
+import com.xavier.domain.Log;
+import com.xavier.domain.User;
+import com.xavier.service.LogService;
 import com.xavier.service.impl.ItemServiceImpl;
+import com.xavier.service.impl.LogServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,6 +54,22 @@ public class AddToCartServlet extends HttpServlet {
             number = 1;
         } else {
             number += 1;
+        }
+
+        Log log = new Log();
+        log.setOperate("加入购物车:"+item.getItem_name());
+        if(request.getRemoteAddr()!=null){
+            log.setIp(request.getRemoteAddr());
+        }
+        User existUser = (User)request.getSession().getAttribute("existUser");
+        if(existUser!=null){
+            log.setUser(existUser.getUser_id());
+        }
+        LogService logService = new LogServiceImpl();
+        try {
+            logService.writeLog(log);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
         // 加入购物车
         cart.put(item,number);

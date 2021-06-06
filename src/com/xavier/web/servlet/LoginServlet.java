@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.xavier.domain.Log;
 import com.xavier.domain.User;
+import com.xavier.service.LogService;
 import com.xavier.service.UserService;
+import com.xavier.service.impl.LogServiceImpl;
 import com.xavier.service.impl.UserServiceImpl;
 
 @WebServlet("/LoginServlet")
@@ -37,10 +40,35 @@ public class LoginServlet extends HttpServlet {
                 // 登录成功
                 // 将用户信息保存:
                 request.getSession().setAttribute("existUser", existUser);
-                response.sendRedirect(request.getContextPath()+"/index.jsp");
+                if(existUser.getRole()==2){
+                    // 管理员界面
+                    response.sendRedirect(request.getContextPath()+"/admin.jsp");
+                }else if(existUser.getRole()==1){
+                    // 销售人员界面
+                    response.sendRedirect(request.getContextPath()+"/manage.jsp");
+                }else {
+                    // 普通用户：转到首页
+                    response.sendRedirect(request.getContextPath()+"/index.jsp");
+                }
+
             }
         } catch (SQLException e){
             e.printStackTrace();
+        }
+        Log log = new Log();
+        log.setOperate("用户登录");
+        if(request.getRemoteAddr()!=null){
+            log.setIp(request.getRemoteAddr());
+        }
+        User existUser = (User)request.getSession().getAttribute("existUser");
+        if(existUser!=null){
+            log.setUser(existUser.getUser_id());
+        }
+        LogService logService = new LogServiceImpl();
+        try {
+            logService.writeLog(log);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
 
     }

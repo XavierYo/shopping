@@ -13,16 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/DelCartServlet")
-public class DelCartServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // 清空购物车
+
+@WebServlet("/ResetPasswordServlet")
+public class ResetPasswordServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // todo
         Log log = new Log();
-        log.setOperate("清空购物车");
-        if(request.getRemoteAddr()!=null){
-            log.setIp(request.getRemoteAddr());
+        log.setOperate("重置用户的密码");
+        if(req.getRemoteAddr()!=null){
+            log.setIp(req.getRemoteAddr());
         }
-        User existUser = (User)request.getSession().getAttribute("existUser");
+        User existUser = (User)req.getSession().getAttribute("existUser");
         if(existUser!=null){
             log.setUser(existUser.getUser_id());
         }
@@ -32,10 +34,9 @@ public class DelCartServlet extends HttpServlet {
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
-        request.getSession().removeAttribute("cart");
-        response.sendRedirect("cart.jsp"); //重定向至主页
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request,response);
+
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req,resp);
     }
 }

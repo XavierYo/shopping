@@ -5,9 +5,13 @@ import com.xavier.utils.JDBCUtils;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ColumnListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ItemDao {
     // 商品添加
@@ -73,6 +77,18 @@ public class ItemDao {
         QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
         System.out.println(sql);
         return qr.query(sql, new BeanListHandler<Item>(Item.class), category_id);
+    }
+    // 获取推荐商品
+    public List<Item> getRecommend() throws SQLException{
+        String sql1 = "SELECT item_id, COUNT(*) AS count  FROM order_detail  GROUP BY item_id  ORDER BY count DESC  LIMIT 4";
+        QueryRunner qr = new QueryRunner(JDBCUtils.getDataSource());
+        List<Integer> list = qr.query(sql1, new ColumnListHandler<Integer>("item_id"));
+        String sql2 = "SELECT * FROM item WHERE item_id=?";
+        List<Item> items = new ArrayList<>();
+        for (Integer l:list) {
+            items.add(qr.query(sql2,new BeanHandler<Item>(Item.class),l));
+        }
+        return items;
     }
 
 

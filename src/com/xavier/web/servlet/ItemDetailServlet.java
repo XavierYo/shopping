@@ -1,7 +1,11 @@
 package com.xavier.web.servlet;
 
 import com.xavier.domain.Item;
+import com.xavier.domain.Log;
+import com.xavier.domain.User;
+import com.xavier.service.LogService;
 import com.xavier.service.impl.ItemServiceImpl;
+import com.xavier.service.impl.LogServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,6 +36,21 @@ public class ItemDetailServlet extends HttpServlet {
         }
         req.getSession().setAttribute("item_detail",item);
         req.getRequestDispatcher("/item_detail.jsp").forward(req, resp);
+        Log log = new Log();
+        log.setOperate("查看商品详情:"+item.getItem_name());
+        if(req.getRemoteAddr()!=null){
+            log.setIp(req.getRemoteAddr());
+        }
+        User existUser = (User)req.getSession().getAttribute("existUser");
+        if(existUser!=null){
+            log.setUser(existUser.getUser_id());
+        }
+        LogService logService = new LogServiceImpl();
+        try {
+            logService.writeLog(log);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
     }
 
 

@@ -3,7 +3,7 @@ package com.xavier.domain;
 public class Category {
     private int category_id;
     private String category_name;
-
+    private int seller;
     public int getCategory_id() {
         return category_id;
     }
@@ -18,5 +18,13 @@ public class Category {
 
     public void setCategory_name(String category_name) {
         this.category_name = category_name;
+    }
+
+    public int getSeller() {
+        return seller;
+    }
+
+    public void setSeller(int seller) {
+        this.seller = seller;
     }
 }

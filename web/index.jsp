@@ -1,3 +1,7 @@
+<%@ page import="com.xavier.service.ItemService" %>
+<%@ page import="com.xavier.service.impl.ItemServiceImpl" %>
+<%@ page import="com.xavier.domain.Item" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -5,8 +9,12 @@
 </head>
   <body>
   <%@ include file ="header.jsp"%>
-  买！买！买！<br/>
-  3070只要3899，库存充足，欢迎抢购<br/>
-  如果当真了那当我没说<br/>
+  【商品推荐】<br/>
+  <%
+    ItemService itemService = new ItemServiceImpl();
+    List<Item> recommend = itemService.getRecommend();
+    request.getSession().setAttribute("items_searchRes",recommend);
+  %>
+  <%@include file="showitems.jsp"%>
   </body>
 </html>

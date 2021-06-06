@@ -16,6 +16,6 @@ public interface ItemService {
     List<Item> getItemsByCatID(int ID) throws SQLException;
     List<Item> getItemsByKeyword(String keyword) throws SQLException;
     List<Item> getAllItems() throws SQLException;
-
+    List<Item> getRecommend() throws SQLException;
 }
 

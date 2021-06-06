@@ -32,4 +32,33 @@ public class UserServiceImpl implements UserService {
         UserDao userDao = new UserDao();
         return userDao.getUserName(user_id);
     }
+
+    @Override
+    public void resetPassword(int user_id, String password) throws SQLException {
+        UserDao userDao = new UserDao();
+        User user = userDao.getUser(user_id);
+        user.setPassword(password);
+        userDao.modUser(user);
+    }
+
+    @Override
+    public void resetPassword(String username, String password) throws SQLException {
+        UserDao userDao = new UserDao();
+        User user = userDao.getUser(username);
+        user.setPassword(password);
+        userDao.modUser(user);
+    }
+
+    @Override
+    public void addSeller(User seller) throws SQLException {
+        UserDao userDao = new UserDao();
+        userDao.addSeller(seller);
+    }
+
+    @Override
+    public void delSeller(int user_id) throws SQLException {
+        UserDao userDao = new UserDao();
+        userDao.delSeller(user_id);
+    }
+
 }

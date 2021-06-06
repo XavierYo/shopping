@@ -1,7 +1,10 @@
 package com.xavier.web.servlet;
 
+import com.xavier.domain.Log;
 import com.xavier.domain.User;
+import com.xavier.service.LogService;
 import com.xavier.service.UserService;
+import com.xavier.service.impl.LogServiceImpl;
 import com.xavier.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
@@ -45,6 +48,17 @@ public class RegistServlet extends HttpServlet {
             // 注册成功
             request.setAttribute("msg", "注册成功！");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
+        }
+        Log log = new Log();
+        log.setOperate("注册新用户："+username);
+        if(request.getRemoteAddr()!=null){
+            log.setIp(request.getRemoteAddr());
+        }
+        LogService logService = new LogServiceImpl();
+        try {
+            logService.writeLog(log);
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
 
 
