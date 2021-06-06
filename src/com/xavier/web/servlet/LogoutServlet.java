@@ -21,11 +21,6 @@ public class LogoutServlet extends HttpServlet {
 
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        //销毁session
-        session.invalidate();
-        String path = request.getContextPath();
-        response.sendRedirect("index.jsp"); //返回主页
         Log log = new Log();
         log.setOperate("注销");
         if(request.getRemoteAddr()!=null){
@@ -41,5 +36,12 @@ public class LogoutServlet extends HttpServlet {
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
+
+        HttpSession session = request.getSession();
+        //销毁session
+        session.invalidate();
+        String path = request.getContextPath();
+        response.sendRedirect("index.jsp"); //返回主页
+
     }
 }
