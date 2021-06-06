@@ -58,7 +58,8 @@ public class MakeOrderServlet extends HttpServlet {
                 }
                 //已获取到邮箱信息
                 if(email_address!=null&&!email_address.equals("")){
-                    SendMail.sendMail(email_address,emailMsg);
+//                    SendMail.sendMail(email_address,emailMsg);
+                    // 阿里云屏蔽邮件，邮件功能暂时下线
                     request.setAttribute("msg","电子订单将发送到你的邮箱");
                 }
             }catch (SQLException e){
