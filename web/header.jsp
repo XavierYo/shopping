@@ -19,6 +19,7 @@
     <table border="1"  cellSpacing="1" cellPadding="1" width="660" border="0">
         <tr valign="bottom">
             <td><A href="index.jsp">主页</A></td>
+            <td><A href="recommend.jsp">热门推荐</A></td>
             <td><A href="register.jsp">注册</A></td>
             <td><A href="login.jsp">登录</A></td>
             <td><A href="browser.jsp">浏览商品</A></td>
