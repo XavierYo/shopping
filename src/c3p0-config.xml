@@ -5,6 +5,7 @@
         <property name="password">6789</property>
         <property name="driverClass">com.mysql.jdbc.Driver</property>
 <!--        <property name="jdbcUrl">jdbc:mysql://47.115.63.32:3306/shopdb?&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf-8</property>-->
-        <property name="jdbcUrl">jdbc:mysql://localhost:3306/shopdb?&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf-8&amp;autoReconnect=true</property>
+        <property name="jdbcUrl">jdbc:mysql://localhost:3306/shopdb?&amp;useSSL=false&amp;serverTimezone=UTC&amp;characterEncoding=utf-8</property>
+        <property name="testConnectionOnCheckout">true</property>
     </default-config>
 </c3p0-config>
